@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_marginBottom="40dp"
+    android:layout_height="match_parent">
+
+    <!-- Top App Bar -->
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/topAppBar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:paddingTop="15dp"
+        android:background="?attr/colorPrimary"
+        android:title="@string/app_name"
+        android:titleTextColor="@android:color/white"
+        app:titleTextAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:padding="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <!-- Algorithm Selection -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/select_scheduling_algorithm"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <RadioGroup
+                android:id="@+id/algorithmGroup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginBottom="8dp">
+
+                <RadioButton
+                    android:id="@+id/radioFcfs"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/fcfs" />
+
+                <RadioButton
+                    android:id="@+id/radioSjf"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/sjf" />
+
+                <RadioButton
+                    android:id="@+id/radioRoundRobin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/round_robin" />
+
+                <RadioButton
+                    android:id="@+id/radioPriority"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/priority_queue" />
+            </RadioGroup>
+
+            <!-- Add Process -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/add_new_process"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/editProcessName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/process_name"
+                android:minHeight="48dp" />
+
+            <EditText
+                android:id="@+id/editArrival"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/arrival_time"
+                android:inputType="number"
+                android:minHeight="48dp" />
+
+            <EditText
+                android:id="@+id/editBurst"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/burst_time"
+                android:inputType="number"
+                android:minHeight="48dp" />
+
+            <EditText
+                android:id="@+id/editPriority"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/priority_optional"
+                android:inputType="number"
+                android:minHeight="48dp" />
+
+            <Button
+                android:id="@+id/btnAddProcess"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/add_process"
+                android:layout_marginTop="8dp" />
+
+            <!-- Process List -->
+            <TextView
+                android:id="@+id/txtResults"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/process_queue"
+                android:textStyle="italic"
+                android:textSize="18sp"
+                android:layout_marginTop="16dp" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/processRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp" />
+
+            <!-- Run/Clear Buttons -->
+            <Button
+                android:id="@+id/btnRunSimulation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/run_simulation_button"
+                android:layout_marginTop="8dp" />
+
+            <Button
+                android:id="@+id/btnClearProcesses"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/Clear" />
+
+
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

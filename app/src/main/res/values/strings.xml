@@ -1,0 +1,43 @@
+<resources>
+    <string name="app_name">CPU Scheduler</string>
+    <string name="FCFS">FCFS</string>
+    <string name="SJF">SJF</string>
+    <string name="RoundRobin">Round Robin</string>
+    <string name="PriorityQueue">Priority Queue</string>
+
+    <string name="algorithm_selection">Algorithm Selection</string>
+    <string name="add_process_label">Add Process</string>
+    <string name="process_queue">Process Queue</string>
+    <string name="add_process_button">Add Process</string>
+    <string name="run_simulation_button">Run Simulation</string>
+
+    <!-- Hints -->
+    <string name="hint_process_name">Process Name</string>
+    <string name="hint_arrival_time">Arrival Time</string>
+    <string name="hint_burst_time">Burst Time</string>
+    <string name="hint_priority">Priority (Optional)</string>
+
+    <string name="Clear">Clear All Processes</string>
+    <string name="Gantt_Chart">Gantt Chart</string>
+    <string name="performance">Performance</string>
+    <string name="cpu_scheduler_app">CPU Scheduler App</string>
+    <string name="select_scheduling_algorithm">Select Scheduling Algorithm</string>
+    <string name="fcfs">FCFS</string>
+    <string name="sjf">SJF</string>
+    <string name="round_robin">Round Robin</string>
+    <string name="priority_queue">Priority Queue</string>
+    <string name="add_new_process">Add New Process</string>
+    <string name="process_name">Process Name</string>
+    <string name="arrival_time">Arrival Time</string>
+    <string name="burst_time">Burst Time</string>
+    <string name="priority_optional">Priority (optional)</string>
+    <string name="add_process">Add Process</string>
+    <string name="algorithm_description">Algorithm Description</string>
+    <string name="gantt_chart_output">Gantt Chart Output</string>
+    <string name="performance_statistics">Performance Statistics</string>
+    <string name="gantt_chart">Gantt Chart</string>
+    <string name="result">Result</string>
+    <string name="gantt_chart_text">Gantt Chart (Text)</string>
+    <string name="gantt_chart_graphical">Gantt Chart (Graphical)</string>
+
+</resources>
