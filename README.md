@@ -3,6 +3,7 @@
 CPU Scheduler is an interactive Android application designed to simulate various CPU scheduling algorithms with a rich, animated UI and real-time performance analysis. It is ideal for students, educators, and developers who want to understand CPU scheduling concepts visually.
 
 🚀 Features
+
  . Multiple Scheduling Algorithms
 
 -> FCFS (First Come First Serve)
