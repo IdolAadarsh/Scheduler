@@ -3,6 +3,7 @@ package com.idroid.scheduler;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioGroup;
@@ -14,7 +15,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -24,10 +24,7 @@ import java.util.Queue;
 public class MainActivity extends AppCompatActivity {
     private RadioGroup algorithmGroup;
     private EditText editName, editArrival, editBurst, editPriority;
-    private Button addButton, runButton;
-    private RecyclerView recyclerView;
-    private TextView txtResults, performanceStats;
-    private GanttChartView ganttChart;
+    private TextView txtResults;
     private ProcessAdapter adapter;
     private final ArrayList<ProcessModel> processList = new ArrayList<>();
 
@@ -37,23 +34,19 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Setup toolbar (App bar)
         Toolbar toolbar = findViewById(R.id.topAppBar);
         setSupportActionBar(toolbar);
 
-        // Initialize views
         algorithmGroup = findViewById(R.id.algorithmGroup);
         editName = findViewById(R.id.editProcessName);
         editArrival = findViewById(R.id.editArrival);
         editBurst = findViewById(R.id.editBurst);
         editPriority = findViewById(R.id.editPriority);
-        addButton = findViewById(R.id.btnAddProcess);
-        runButton = findViewById(R.id.btnRunSimulation);
+        Button addButton = findViewById(R.id.btnAddProcess);
+        Button runButton = findViewById(R.id.btnRunSimulation);
         Button clearButton = findViewById(R.id.btnClearProcesses);
-        recyclerView = findViewById(R.id.processRecyclerView);
+        RecyclerView recyclerView = findViewById(R.id.processRecyclerView);
         txtResults = findViewById(R.id.txtResults);
-        //performanceStats = findViewById(R.id.performanceStats);
-        //ganttChart = findViewById(R.id.ganttChart);
 
         adapter = new ProcessAdapter(processList);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -89,8 +82,6 @@ public class MainActivity extends AppCompatActivity {
             processList.clear();
             adapter.notifyDataSetChanged();
             txtResults.setText("");
-            performanceStats.setText("");
-            ganttChart.setBlocks(new ArrayList<>());
         });
     }
 
@@ -130,44 +121,66 @@ public class MainActivity extends AppCompatActivity {
                 "\nAvg Turnaround Time: " + String.format("%.2f", avgTAT) +
                 "\nThroughput: " + String.format("%.2f", throughput) + " processes/unit time";
 
-        // Fetch the explanation
-        String description = getAlgorithmDescription(title);
-
-        // Start result activity
+        // Prepare intent
         Intent intent = new Intent(this, ResultActivity.class);
         intent.putExtra("title", title);
-        intent.putExtra("description", description);
+        intent.putExtra("description", getAlgorithmDescription(title));
         intent.putExtra("gantt", ganttText.toString());
         intent.putExtra("stats", stats);
-        intent.putExtra("blocks", blocks);
+        intent.putParcelableArrayListExtra("blocks", (ArrayList<? extends Parcelable>) blocks);
         startActivity(intent);
     }
 
     private String getAlgorithmDescription(String title) {
         switch (title) {
             case "FCFS Gantt Chart":
-                return "First-Come, First-Served (FCFS) is a simple scheduling algorithm where the first process to arrive is the first to be executed.";
+                return "<b>First-Come, First-Served (FCFS)</b><br><br>" +
+                        "🔹 <b>Type:</b> Non-preemptive<br>" +
+                        "🔹 <b>Strategy:</b> Processes are executed in the order they arrive.<br>" +
+                        "🔹 <b>Advantage:</b> Simple to implement<br>" +
+                        "🔹 <b>Disadvantage:</b> May cause long wait times for short processes<br><br>" +
+                        "<i>Use case:</i> Suitable when all jobs arrive nearly at the same time.";
+
             case "SJF Gantt Chart":
-                return "Shortest Job First (SJF) selects the process with the smallest burst time. Non-preemptive version is used here.";
+                return "<b>Shortest Job First (SJF)</b><br><br>" +
+                        "🔹 <b>Type:</b> Non-preemptive<br>" +
+                        "🔹 <b>Strategy:</b> Executes the process with the shortest burst time.<br>" +
+                        "🔹 <b>Advantage:</b> Minimizes average waiting time<br>" +
+                        "🔹 <b>Disadvantage:</b> Starvation for longer processes<br><br>" +
+                        "<i>Use case:</i> Best when burst times are known in advance.";
+
             case "Priority Gantt Chart":
-                return "Priority Scheduling executes processes based on priority value. Lower number means higher priority.";
+                return "<b>Priority Scheduling</b><br><br>" +
+                        "🔹 <b>Type:</b> Non-preemptive<br>" +
+                        "🔹 <b>Strategy:</b> Executes the highest-priority process first (lower number = higher priority).<br>" +
+                        "🔹 <b>Advantage:</b> Handles important tasks first<br>" +
+                        "🔹 <b>Disadvantage:</b> Starvation of low-priority tasks<br><br>" +
+                        "<i>Use case:</i> Systems where processes have different importance levels.";
+
             case "Round Robin Gantt Chart":
-                return "Round Robin scheduling cycles through all ready processes using a fixed time quantum, ensuring fairness.";
+                return "<b>Round Robin (RR)</b><br><br>" +
+                        "🔹 <b>Type:</b> Preemptive<br>" +
+                        "🔹 <b>Strategy:</b> Each process gets a fixed time quantum in a cyclic order.<br>" +
+                        "🔹 <b>Advantage:</b> Fair to all processes<br>" +
+                        "🔹 <b>Disadvantage:</b> Performance depends on time quantum<br><br>" +
+                        "<i>Use case:</i> Ideal for time-sharing systems and multitasking environments.";
+
             default:
-                return "This algorithm schedules processes based on defined criteria.";
+                return "<b>CPU Scheduling Algorithm</b><br><br>" +
+                        "Schedules processes based on specific criteria like arrival time, burst time, or priority.<br>" +
+                        "Choose an algorithm to see how the CPU time is allocated among processes.";
         }
     }
 
 
-
     private void runFCFS() {
         ArrayList<ProcessModel> list = new ArrayList<>(processList);
-        Collections.sort(list, Comparator.comparingInt(p -> p.arrival));
+        list.sort(Comparator.comparingInt(p -> p.arrival));
         ArrayList<GanttChartView.GanttBlock> blocks = new ArrayList<>();
         HashMap<String, Integer> waiting = new HashMap<>();
         HashMap<String, Integer> turnaround = new HashMap<>();
-
         int time = 0;
+
         for (ProcessModel p : list) {
             int start = Math.max(time, p.arrival);
             int wt = start - p.arrival;
@@ -182,13 +195,13 @@ public class MainActivity extends AppCompatActivity {
 
     private void runSJF() {
         ArrayList<ProcessModel> list = new ArrayList<>(processList);
-        Collections.sort(list, Comparator.comparingInt(p -> p.arrival));
+        list.sort(Comparator.comparingInt(p -> p.arrival));
         ArrayList<ProcessModel> readyQueue = new ArrayList<>();
         ArrayList<GanttChartView.GanttBlock> blocks = new ArrayList<>();
         HashMap<String, Integer> waiting = new HashMap<>();
         HashMap<String, Integer> turnaround = new HashMap<>();
-
         int time = 0;
+
         while (!list.isEmpty() || !readyQueue.isEmpty()) {
             for (Iterator<ProcessModel> it = list.iterator(); it.hasNext();) {
                 ProcessModel p = it.next();
@@ -219,8 +232,8 @@ public class MainActivity extends AppCompatActivity {
         HashMap<String, Integer> waiting = new HashMap<>();
         HashMap<String, Integer> turnaround = new HashMap<>();
         ArrayList<GanttChartView.GanttBlock> blocks = new ArrayList<>();
-
         int time = 0, index = 0;
+
         for (ProcessModel p : list) remaining.put(p.name, p.burst);
 
         while (!queue.isEmpty() || index < list.size()) {
@@ -261,8 +274,8 @@ public class MainActivity extends AppCompatActivity {
         ArrayList<GanttChartView.GanttBlock> blocks = new ArrayList<>();
         HashMap<String, Integer> waiting = new HashMap<>();
         HashMap<String, Integer> turnaround = new HashMap<>();
-
         int time = 0;
+
         while (!list.isEmpty() || !readyQueue.isEmpty()) {
             for (Iterator<ProcessModel> it = list.iterator(); it.hasNext();) {
                 ProcessModel p = it.next();

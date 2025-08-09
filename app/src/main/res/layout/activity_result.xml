@@ -1,24 +1,21 @@
-<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!-- Top App Bar -->
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/topAppBar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary"
-        android:title="@string/result"
+        android:title="@string/results"
         android:titleTextColor="@android:color/white"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
-    <!-- Scrollable Content -->
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:padding="16dp">
 
         <LinearLayout
@@ -26,40 +23,26 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <!-- Description -->
             <TextView
                 android:id="@+id/txtDescription"
-                android:text="@string/algorithm_description"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:layout_marginBottom="16dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-            <!-- Gantt Chart Text -->
-            <TextView
-                android:id="@+id/txtGanttText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/gantt_chart_text"
-                android:textStyle="italic"
-                android:layout_marginTop="16dp" />
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="16dp" />
 
             <TextView
                 android:id="@+id/txtGanttChart"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="16sp"
-                android:textColor="#333333"
                 android:layout_marginBottom="16dp" />
 
-            <!-- Gantt Chart Graphic -->
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/gantt_chart_graphical"
-                android:textStyle="italic"
-                android:layout_marginTop="16dp" />
+                android:text="Gantt Chart (Graphical):"
+                android:textStyle="italic" />
 
             <com.idroid.scheduler.GanttChartView
                 android:id="@+id/ganttChartView"
@@ -67,13 +50,42 @@
                 android:layout_height="60dp"
                 android:layout_marginBottom="16dp" />
 
-            <!-- Performance -->
-            <TextView
+            <!-- Playback Buttons -->
+            <LinearLayout
+                android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/performance_statistics"
-                android:textSize="20sp"
-                android:textStyle="bold" />
+                android:gravity="center"
+                android:layout_marginBottom="16dp">
+
+                <Button
+                    android:id="@+id/btnPlay"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Play" />
+
+                <Button
+                    android:id="@+id/btnPause"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Pause"
+                    android:layout_marginStart="16dp" />
+
+                <Button
+                    android:id="@+id/btnStep"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Step"
+                    android:layout_marginStart="16dp" />
+            </LinearLayout>
+
+            <!-- Stats -->
+            <TextView
+                android:text="Performance:"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:textSize="20sp" />
 
             <TextView
                 android:id="@+id/txtStats"
@@ -81,7 +93,6 @@
                 android:layout_height="wrap_content"
                 android:textSize="16sp"
                 android:layout_marginBottom="24dp" />
-
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

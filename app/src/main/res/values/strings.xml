@@ -39,5 +39,7 @@
     <string name="result">Result</string>
     <string name="gantt_chart_text">Gantt Chart (Text)</string>
     <string name="gantt_chart_graphical">Gantt Chart (Graphical)</string>
+    <string name="results">Result</string>
+    <string name="app_logo">App Logo</string>
 
 </resources>
